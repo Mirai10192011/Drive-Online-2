@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head><meta http-equiv="Content-Security-Policy" content="child-src 'self' *.allwebgames.com *.drive.google.com *.exitgames.com *.gametok.com *.juegocasa.com *.photonengine.com *.photonengine.io *.playhop.com *.wowspiele.de *.yandex.az *.yandex.by *.yandex.co.il *.yandex.com *.yandex.com.am *.yandex.com.ge *.yandex.com.tr *.yandex.ee *.yandex.fr *.yandex.kg *.yandex.kz *.yandex.lt *.yandex.lv *.yandex.md *.yandex.ru *.yandex.tj *.yandex.tm *.yandex.ua *.yandex.uz *.yango.com allwebgames.com blob: drive.google.com exitgames.com gametok.com juegocasa.com photonengine.com photonengine.io playhop.com wowspiele.de yandex.az yandex.by yandex.co.il yandex.com yandex.com.am yandex.com.ge yandex.com.tr yandex.ee yandex.fr yandex.kg yandex.kz yandex.lt yandex.lv yandex.md yandex.ru yandex.tj yandex.tm yandex.ua yandex.uz yango.com; connect-src 'self' *.allwebgames.com *.drive.google.com *.eponesh.com *.exitgames.com *.gameanalytics.com *.gametok.com *.juegocasa.com *.photonengine.com *.photonengine.io *.playhop.com *.wowspiele.de *.yandex.az *.yandex.by *.yandex.co.il *.yandex.com *.yandex.com.am *.yandex.com.ge *.yandex.com.tr *.yandex.ee *.yandex.fr *.yandex.kg *.yandex.kz *.yandex.lt *.yandex.lv *.yandex.md *.yandex.ru *.yandex.tj *.yandex.tm *.yandex.ua *.yandex.uz *.yango.com allwebgames.com drive.google.com eponesh.com exitgames.com gameanalytics.com gametok.com juegocasa.com photonengine.com photonengine.io playhop.com wowspiele.de yandex.az yandex.by yandex.co.il yandex.com yandex.com.am yandex.com.ge yandex.com.tr yandex.ee yandex.fr yandex.kg yandex.kz yandex.lt yandex.lv yandex.md yandex.ru yandex.tj yandex.tm yandex.ua yandex.uz yango.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.allwebgames.com *.drive.google.com *.exitgames.com *.gametok.com *.juegocasa.com *.photonengine.com *.photonengine.io *.playhop.com *.wowspiele.de *.yandex.az *.yandex.by *.yandex.co.il *.yandex.com *.yandex.com.am *.yandex.com.ge *.yandex.com.tr *.yandex.ee *.yandex.fr *.yandex.kg *.yandex.kz *.yandex.lt *.yandex.lv *.yandex.md *.yandex.ru *.yandex.tj *.yandex.tm *.yandex.ua *.yandex.uz *.yango.com allwebgames.com drive.google.com exitgames.com gametok.com juegocasa.com photonengine.com photonengine.io playhop.com wowspiele.de yandex.az yandex.by yandex.co.il yandex.com yandex.com.am yandex.com.ge yandex.com.tr yandex.ee yandex.fr yandex.kg yandex.kz yandex.lt yandex.lv yandex.md yandex.ru yandex.tj yandex.tm yandex.ua yandex.uz yango.com;">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Driver Online Cars</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+
+    <style>
+        body {
+            background-image: url("background.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body>
+    <div id="unity-container" class="unity-desktop">
+        <canvas id="unity-canvas" width=960 height=600></canvas>
+        <div id="unity-loading-bar">
+            <div id="unity-logo"></div>
+            <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+            </div>
+        </div>
+        <div id="unity-warning"> </div>
+        <div id="unity-footer">
+            <div id="unity-webgl-logo"></div>
+            <div id="unity-fullscreen-button"></div>
+            <div id="unity-build-title">Driver Online Cars</div>
+        </div>
+    </div>
+    <script>
+        var container = document.querySelector("#unity-container");
+        var canvas = document.querySelector("#unity-canvas");
+        var loadingBar = document.querySelector("#unity-loading-bar");
+        var progressBarFull = document.querySelector("#unity-progress-bar-full");
+        var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+        var warningBanner = document.querySelector("#unity-warning");
+
+        function unityShowBanner(msg, type) {
+            function updateBannerVisibility() {
+                warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+            }
+            var div = document.createElement('div');
+            div.innerHTML = msg;
+            warningBanner.appendChild(div);
+            if (type == 'error') div.style = 'background: red; padding: 10px;';
+            else {
+                if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+                setTimeout(function() {
+                    warningBanner.removeChild(div);
+                    updateBannerVisibility();
+                }, 5000);
+            }
+            updateBannerVisibility();
+        }
+
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/Build.loader.js";
+        var config = {
+            dataUrl: buildUrl + "/Build.data.unityweb",
+            frameworkUrl: buildUrl + "/Build.framework.js.unityweb",
+            codeUrl: buildUrl + "/Build.wasm.unityweb",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "DefaultCompany",
+            productName: "Driver Online Cars",
+            productVersion: "1.0",
+            showBanner: unityShowBanner,
+        };
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            var meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no';
+            document.getElementsByTagName('head')[0].appendChild(meta);
+            container.className = "unity-mobile";
+            canvas.className = "unity-mobile";
+            unityShowBanner('WebGL builds are not supported on mobile devices.');
+        } else {
+            canvas.style.width = "960px";
+            canvas.style.height = "600px";
+        }
+
+        loadingBar.style.display = "block";
+
+        var myGameInstance = null;
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+            // Yandex関係のエラーを回避するため、直にUnity起動処理を行えるように設定
+            InitYSDK();
+        };
+
+        function StartUnityInstance_IfUnloaded() {
+            if (myGameInstance == null) {
+                StartUnityInstance();
+            }
+        }
+
+        function StartUnityInstance() {
+            createUnityInstance(canvas, config, (progress) => {
+                progressBarFull.style.width = 100 * progress + "%";
+            }).then((unityInstance) => {
+                myGameInstance = unityInstance;
+                loadingBar.style.display = "none";
+                fullscreenButton.onclick = () => {
+                    unityInstance.SetFullscreen(1);
+                };
+            }).catch((message) => {
+                alert(message);
+            });
+        }
+
+        // --- Yandex SDKをバイパスする修正部分 ---
+        var ysdk = null;
+        var player = null;
+        var leaderboard = null;
+
+        async function InitYSDK() {
+            try {
+                console.log('Skip Yandex SDK and Start Unity directly.');
+                // Yandexの初期化を完全に無視して直接Unityをスタート
+                StartUnityInstance();
+            } catch (e) {
+                console.error("Error in InitYSDK: ", e);
+                StartUnityInstance(); // 万が一エラーになっても起動を試みる
+            }
+        }
+
+        function LocalHost() {
+            return false;
+        }
+
+        function FullAdShow() {
+            console.log("FullAdShow skipped.");
+        }
+
+        function RewardedShow(id) {
+            console.log("RewardedShow skipped. ID:", id);
+            // ゲーム側が広告報酬を待つ可能性があるため、成功したテイで通知を送る
+            if (myGameInstance) {
+                myGameInstance.SendMessage('YandexGame', 'RewardReady', id);
+            }
+        }
+
+        function StickyAdActivity(show) {
+            console.log("StickyAdActivity:", show);
+        }
+
+        function InitPlayer(sendback) {
+            return new Promise((resolve) => {
+                let authJson = {
+                    "playerAuth": "rejected",
+                    "playerName": "Player",
+                    "playerId": "12345",
+                    "playerPhoto": "unknown"
+                };
+                resolve(JSON.stringify(authJson));
+            });
+        }
+
+        function OpenAuthDialog() {
+            console.log("OpenAuthDialog skipped.");
+        }
+
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>
